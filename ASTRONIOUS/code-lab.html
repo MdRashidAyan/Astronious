@@ -1,372 +1,896 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
+  <title>Code Lab | ASTRONIUS</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    <title>ASTRONIUS - Code Lab</title>
+    html {
+      scroll-behavior: smooth;
+    }
 
-    <link
-        rel="stylesheet"
-        href="css/code-lab.css"
-    >
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(60, 90, 180, 0.15), transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(110, 60, 200, 0.12), transparent 30%),
+        #030712;
+      color: #e8f1ff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
+    /* =========================
+       STAR BACKGROUND
+    ========================= */
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, white, transparent),
+        radial-gradient(1px 1px at 25% 70%, white, transparent),
+        radial-gradient(1px 1px at 40% 35%, white, transparent),
+        radial-gradient(1px 1px at 60% 15%, white, transparent),
+        radial-gradient(1px 1px at 75% 50%, white, transparent),
+        radial-gradient(1px 1px at 90% 25%, white, transparent),
+        radial-gradient(1px 1px at 85% 85%, white, transparent),
+        radial-gradient(1px 1px at 15% 90%, white, transparent);
+      background-size: 250px 250px;
+      opacity: 0.5;
+      z-index: -1;
+    }
+
+    /* =========================
+       NAVBAR
+    ========================= */
+
+    nav {
+      height: 75px;
+      padding: 0 7%;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      background: rgba(3, 7, 18, 0.78);
+      backdrop-filter: blur(14px);
+
+      border-bottom: 1px solid rgba(120, 170, 255, 0.15);
+
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: 3px;
+
+      background: linear-gradient(
+        90deg,
+        #ffffff,
+        #78aaff
+      );
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #aebed8;
+      text-decoration: none;
+      font-size: 14px;
+
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links .active {
+      color: #78aaff;
+
+      text-shadow:
+        0 0 12px rgba(120, 170, 255, 0.7);
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      max-width: 1100px;
+      margin: auto;
+
+      padding: 90px 25px 45px;
+
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+
+      padding: 8px 15px;
+
+      border-radius: 50px;
+
+      border: 1px solid rgba(120, 170, 255, 0.35);
+
+      background: rgba(50, 90, 170, 0.12);
+
+      color: #8bb7ff;
+
+      font-size: 12px;
+      letter-spacing: 2px;
+
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 7vw, 76px);
+
+      line-height: 1;
+
+      margin-bottom: 20px;
+
+      background: linear-gradient(
+        120deg,
+        #ffffff,
+        #a8c8ff,
+        #667dff
+      );
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      max-width: 650px;
+
+      margin: auto;
+
+      color: #8fa2c2;
+
+      font-size: 17px;
+
+      line-height: 1.7;
+    }
+
+    /* =========================
+       CODE LAB
+    ========================= */
+
+    .lab {
+      max-width: 1200px;
+
+      margin: 30px auto 100px;
+
+      padding: 0 25px;
+    }
+
+    .lab-window {
+      background: rgba(7, 13, 30, 0.85);
+
+      border: 1px solid rgba(110, 160, 255, 0.22);
+
+      border-radius: 18px;
+
+      overflow: hidden;
+
+      box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.45),
+        0 0 50px rgba(70, 110, 255, 0.06);
+    }
+
+    /* =========================
+       WINDOW HEADER
+    ========================= */
+
+    .window-top {
+      height: 55px;
+
+      padding: 0 18px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      background: rgba(20, 30, 55, 0.7);
+
+      border-bottom: 1px solid rgba(120, 170, 255, 0.12);
+    }
+
+    .dots {
+      display: flex;
+
+      gap: 7px;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+
+      border-radius: 50%;
+
+      background: #52627c;
+    }
+
+    .window-title {
+      color: #8295b7;
+
+      font-size: 12px;
+
+      letter-spacing: 1px;
+    }
+
+    .status {
+      font-size: 11px;
+
+      color: #65e6a5;
+    }
+
+    /* =========================
+       EDITOR
+    ========================= */
+
+    .editor {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      min-height: 500px;
+    }
+
+    .panel {
+      display: flex;
+
+      flex-direction: column;
+    }
+
+    .panel:first-child {
+      border-right: 1px solid rgba(120, 170, 255, 0.12);
+    }
+
+    .panel-header {
+      height: 45px;
+
+      padding: 0 18px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      background: rgba(10, 19, 40, 0.8);
+
+      color: #8da4c9;
+
+      font-size: 12px;
+
+      letter-spacing: 1px;
+    }
+
+    textarea {
+      flex: 1;
+
+      width: 100%;
+
+      resize: none;
+
+      background: #050a17;
+
+      color: #b9d7ff;
+
+      border: none;
+
+      outline: none;
+
+      padding: 22px;
+
+      font-family: "Courier New", monospace;
+
+      font-size: 14px;
+
+      line-height: 1.7;
+    }
+
+    textarea::selection {
+      background: rgba(90, 140, 255, 0.3);
+    }
+
+    iframe {
+      flex: 1;
+
+      width: 100%;
+
+      border: none;
+
+      background: white;
+    }
+
+    /* =========================
+       CONTROLS
+    ========================= */
+
+    .controls {
+      padding: 18px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      background: rgba(9, 17, 35, 0.9);
+
+      border-top: 1px solid rgba(120, 170, 255, 0.12);
+    }
+
+    .mission-status {
+      color: #7085a8;
+
+      font-size: 12px;
+    }
+
+    .mission-status span {
+      color: #62e4a1;
+    }
+
+    .launch-btn {
+      border: none;
+
+      outline: none;
+
+      padding: 12px 25px;
+
+      border-radius: 9px;
+
+      background: linear-gradient(
+        135deg,
+        #557cff,
+        #7658e8
+      );
+
+      color: white;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 0 20px rgba(90, 110, 255, 0.25);
+
+      transition: 0.25s;
+    }
+
+    .launch-btn:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 0 30px rgba(100, 130, 255, 0.45);
+    }
+
+    .launch-btn:active {
+      transform: translateY(0);
+    }
+
+    /* =========================
+       INFO CARDS
+    ========================= */
+
+    .cards {
+      max-width: 1100px;
+
+      margin: 0 auto 100px;
+
+      padding: 0 25px;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 20px;
+    }
+
+    .card {
+      padding: 25px;
+
+      background: rgba(10, 18, 38, 0.65);
+
+      border: 1px solid rgba(120, 170, 255, 0.14);
+
+      border-radius: 15px;
+
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+
+      border-color:
+        rgba(120, 170, 255, 0.35);
+
+      background:
+        rgba(15, 27, 55, 0.75);
+    }
+
+    .card-icon {
+      font-size: 25px;
+
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      font-size: 17px;
+
+      margin-bottom: 9px;
+    }
+
+    .card p {
+      color: #7e91b2;
+
+      font-size: 13px;
+
+      line-height: 1.6;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      padding: 35px 20px;
+
+      text-align: center;
+
+      border-top:
+        1px solid rgba(120, 170, 255, 0.1);
+
+      color: #536685;
+
+      font-size: 12px;
+    }
+
+    footer strong {
+      color: #91b7ff;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 900px) {
+
+      nav {
+        padding: 0 25px;
+      }
+
+      .nav-links {
+        gap: 15px;
+      }
+
+      .nav-links a {
+        font-size: 12px;
+      }
+
+      .editor {
+        grid-template-columns: 1fr;
+      }
+
+      .panel:first-child {
+        border-right: none;
+
+        border-bottom:
+          1px solid rgba(120, 170, 255, 0.12);
+      }
+
+      .panel {
+        min-height: 400px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 650px) {
+
+      nav {
+        height: auto;
+
+        padding: 20px;
+
+        flex-direction: column;
+
+        gap: 15px;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 12px;
+      }
+
+      .hero {
+        padding-top: 60px;
+      }
+
+      .controls {
+        gap: 15px;
+
+        flex-direction: column;
+
+        align-items: stretch;
+      }
+
+      .launch-btn {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
+  <!-- =========================
+       NAVIGATION
+  ========================= -->
 
-<!-- ================= HEADER ================= -->
+  <nav>
 
-<header>
+    <div class="logo">
+      ASTRONIUS
+    </div>
 
-    <a href="astronious.html" class="logo">
-        ASTR<span>NIOUS</span>
-    </a>
+    <ul class="nav-links">
 
-    <nav>
-
-        <a href="astronious.html">
-            Home
+      <li>
+        <a href="astronius.html">
+          Home
         </a>
+      </li>
 
+      <li>
         <a href="planet.html">
-            Planets
+          Planets
         </a>
+      </li>
 
-        <a href="missions.html">
-            Missions
-        </a>
-
-        <a href="stars.html">
-            Stars
-        </a>
-
+      <li>
         <a href="galaxies.html">
-            Galaxies
+          Galaxies
         </a>
+      </li>
 
+      <li>
+        <a href="stars.html">
+          Stars
+        </a>
+      </li>
+
+      <li>
+        <a href="missions.html">
+          Missions
+        </a>
+      </li>
+
+      <li>
         <a href="facts.html">
-            Facts
+          Facts
         </a>
+      </li>
 
+      <li>
+        <a href="code-lab.html" class="active">
+          Code Lab
+        </a>
+      </li>
+
+      <li>
         <a href="about.html">
-            About
+          About
         </a>
+      </li>
 
-        <a href="code-lab.html">
-            Code Lab
-        </a>
+    </ul>
 
-    </nav>
-
-</header>
+  </nav>
 
 
-<!-- ================= HERO ================= -->
+  <!-- =========================
+       HERO
+  ========================= -->
 
-<section class="hero">
+  <section class="hero">
 
-    <div class="hero-content">
-
-        <div class="small-title">
-            ✦ ASTRONIUS ENGINEERING
-        </div>
-
-        <h1>
-            CODE
-            <span class="gradient">
-                LAB.
-            </span>
-        </h1>
-
-        <p>
-            Explore the technology and programming
-            used to power the future of space exploration.
-        </p>
-
-        <div class="language-pills">
-
-            <span>C++</span>
-            <span>Java</span>
-            <span>Node.js</span>
-            <span>PHP</span>
-
-        </div>
-
+    <div class="badge">
+      ASTRONIUS // MISSION CONTROL
     </div>
 
-</section>
-
-
-<!-- ================= CODE SECTION ================= -->
-
-<section class="code-section">
-
-    <div class="section-title">
-
-        <h2>🚀 Space Engineering</h2>
-
-        <p>
-            Real programming languages can help us
-            model missions, calculate orbits and build
-            space technology.
-        </p>
-
-    </div>
-
-
-    <div class="code-grid">
-
-
-        <!-- C++ -->
-
-        <div class="code-card">
-
-            <div class="code-card-header">
-
-                <div class="code-icon">
-                    ⚙️
-                </div>
-
-                <div>
-                    <h3>C++</h3>
-
-                    <span>
-                        Orbital Physics
-                    </span>
-                </div>
-
-            </div>
-
-
-            <pre><code>#include &lt;iostream&gt;
-#include &lt;cmath&gt;
-
-int main() {
-
-    double G = 6.67430e-11;
-    double M = 5.972e24;
-    double r = 6.771e6;
-
-    double velocity =
-        sqrt(G * M / r);
-
-    std::cout
-        &lt;&lt; "Orbital velocity: "
-        &lt;&lt; velocity
-        &lt;&lt; " m/s";
-
-    return 0;
-}</code></pre>
-
-        </div>
-
-
-        <!-- JAVA -->
-
-        <div class="code-card">
-
-            <div class="code-card-header">
-
-                <div class="code-icon">
-                    ☕
-                </div>
-
-                <div>
-                    <h3>Java</h3>
-
-                    <span>
-                        Mission Calculator
-                    </span>
-                </div>
-
-            </div>
-
-
-            <pre><code>public class Mission {
-
-    public static void main(String[] args) {
-
-        int missionDays = 180;
-
-        System.out.println(
-            "Mission duration: "
-            + missionDays
-            + " days"
-        );
-    }
-}</code></pre>
-
-        </div>
-
-
-        <!-- NODE JS -->
-
-        <div class="code-card">
-
-            <div class="code-card-header">
-
-                <div class="code-icon">
-                    🟢
-                </div>
-
-                <div>
-                    <h3>Node.js</h3>
-
-                    <span>
-                        Space Data Server
-                    </span>
-                </div>
-
-            </div>
-
-
-            <pre><code>const http = require("http");
-
-const server = http.createServer(
-    (req, res) => {
-
-        res.writeHead(200, {
-            "Content-Type":
-            "application/json"
-        });
-
-        res.end(JSON.stringify({
-            mission: "ASTRONIUS-1",
-            status: "ACTIVE",
-            destination: "Mars"
-        }));
-    }
-);
-
-server.listen(3000);</code></pre>
-
-        </div>
-
-
-        <!-- PHP -->
-
-        <div class="code-card">
-
-            <div class="code-card-header">
-
-                <div class="code-icon">
-                    🐘
-                </div>
-
-                <div>
-                    <h3>PHP</h3>
-
-                    <span>
-                        Mission API
-                    </span>
-                </div>
-
-            </div>
-
-
-            <pre><code>&lt;?php
-
-$mission = [
-    "name" =&gt; "ASTRONIUS-1",
-    "destination" =&gt; "Mars",
-    "status" =&gt; "Active"
-];
-
-header(
-    "Content-Type: application/json"
-);
-
-echo json_encode($mission);
-
-?&gt;</code></pre>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ================= TERMINAL ================= -->
-
-<section class="terminal-section">
-
-    <div class="section-title">
-
-        <h2>🛰️ Mission Simulator</h2>
-
-        <p>
-            Start the ASTRONIUS engineering simulation.
-        </p>
-
-    </div>
-
-
-    <div class="terminal">
-
-        <div class="terminal-top">
-
-            <span class="terminal-dot"></span>
-            <span class="terminal-dot"></span>
-            <span class="terminal-dot"></span>
-
-            <span class="terminal-title">
-                ASTRONIUS TERMINAL
-            </span>
-
-        </div>
-
-
-        <div
-            id="terminalOutput"
-            class="terminal-output"
-        >
-            &gt; ASTRONIUS CODE LAB READY ✓
-        </div>
-
-
-        <button
-            id="launchBtn"
-            class="launch-button"
-        >
-            🚀 Run Mission Simulation
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- ================= FOOTER ================= -->
-
-<footer>
-
-    <a href="astronious.html" class="logo">
-        ASTR<span>NIOUS</span>
-    </a>
+    <h1>
+      CODE LAB
+    </h1>
 
     <p>
-        Engineering the future of space exploration. 🌌
+      Write code, experiment with ideas, and launch
+      your own digital experiments from the
+      ASTRONIUS mission console.
     </p>
 
-    <p>
-        © 2026 ASTRONIUS
-    </p>
-
-</footer>
+  </section>
 
 
-<script src="js/code-lab.js"></script>
+  <!-- =========================
+       CODE LAB
+  ========================= -->
+
+  <section class="lab">
+
+    <div class="lab-window">
+
+      <!-- Window Header -->
+
+      <div class="window-top">
+
+        <div class="dots">
+
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+
+        </div>
+
+        <div class="window-title">
+          ASTRONIUS / CODE-MODULE-01
+        </div>
+
+        <div class="status">
+          ● SYSTEM ONLINE
+        </div>
+
+      </div>
+
+
+      <!-- Editor -->
+
+      <div class="editor">
+
+        <!-- Code Panel -->
+
+        <div class="panel">
+
+          <div class="panel-header">
+
+            <span>
+              ⌘ COMMAND DECK
+            </span>
+
+            <span>
+              HTML
+            </span>
+
+          </div>
+
+          <textarea id="code"><!DOCTYPE html>
+<html>
+
+<head>
+  <title>My Space Mission</title>
+</head>
+
+<body>
+
+  <h1>🚀 Hello, Space!</h1>
+
+  <p>
+    My first ASTRONIUS mission
+    has launched!
+  </p>
 
 </body>
 
+</html></textarea>
+
+        </div>
+
+
+        <!-- Preview Panel -->
+
+        <div class="panel">
+
+          <div class="panel-header">
+
+            <span>
+              ◉ LIVE TELEMETRY
+            </span>
+
+            <span>
+              PREVIEW
+            </span>
+
+          </div>
+
+          <iframe
+            id="preview"
+            title="Code Preview">
+          </iframe>
+
+        </div>
+
+      </div>
+
+
+      <!-- Controls -->
+
+      <div class="controls">
+
+        <div class="mission-status">
+
+          Mission status:
+          <span>
+            READY FOR LAUNCH
+          </span>
+
+        </div>
+
+        <button
+          class="launch-btn"
+          onclick="launchCode()">
+
+          🚀 LAUNCH CODE
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       INFO CARDS
+  ========================= -->
+
+  <section class="cards">
+
+    <div class="card">
+
+      <div class="card-icon">
+        🛰️
+      </div>
+
+      <h3>
+        Mission Console
+      </h3>
+
+      <p>
+        Use the coding console to experiment
+        with HTML and create your own digital
+        missions.
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-icon">
+        🌌
+      </div>
+
+      <h3>
+        Explore & Experiment
+      </h3>
+
+      <p>
+        Change the code, launch it, and see
+        your creation appear in real time.
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-icon">
+        🚀
+      </div>
+
+      <h3>
+        Launch Your Ideas
+      </h3>
+
+      <p>
+        There are no limits to what you can
+        build. Start small and explore
+        bigger ideas.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+
+    <strong>
+      ASTRONIUS
+    </strong>
+
+    — Explore. Discover. Create. 🌌
+
+  </footer>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
+
+  <script>
+
+    const code =
+      document.getElementById("code");
+
+    const preview =
+      document.getElementById("preview");
+
+
+    function launchCode() {
+
+      preview.srcdoc = code.value;
+
+    }
+
+
+    // Automatically show the starter code
+    launchCode();
+
+
+    // Ctrl + Enter launches the code
+    code.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (
+          event.ctrlKey &&
+          event.key === "Enter"
+        ) {
+
+          launchCode();
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
 </html>

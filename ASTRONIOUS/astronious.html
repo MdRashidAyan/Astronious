@@ -1,420 +1,1363 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTRONIUS - Explore the Universe</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+  <title>ASTRONIUS | Explore the Universe</title>
 
-        html {
-            scroll-behavior: smooth;
-        }
+  <style>
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #03050f;
-            color: white;
-            overflow-x: hidden;
-        }
+    /* =========================
+       RESET
+    ========================= */
 
-        /* STAR BACKGROUND */
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background-image:
-                radial-gradient(circle, white 1px, transparent 1px),
-                radial-gradient(circle, #7d8cff 1px, transparent 1px),
-                radial-gradient(circle, #b77cff 1px, transparent 1px);
-            background-size: 80px 80px, 130px 130px, 190px 190px;
-            background-position: 0 0, 40px 60px, 90px 20px;
-            opacity: 0.3;
-            pointer-events: none;
-            z-index: -1;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        /* HEADER */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px 7%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(3, 5, 15, 0.75);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            z-index: 100;
-        }
+    html {
+      scroll-behavior: smooth;
+    }
 
-        .logo {
-            font-size: 27px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-decoration: none;
-            color: white;
-        }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #030712;
+      color: #eaf2ff;
+      overflow-x: hidden;
+    }
 
-        .logo span {
-            color: #8064ff;
-        }
 
-        nav a {
-            color: #d8d8e5;
-            text-decoration: none;
-            margin-left: 25px;
-            transition: 0.3s;
-        }
+    /* =========================
+       SPACE BACKGROUND
+    ========================= */
 
-        nav a:hover {
-            color: #967cff;
-        }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
 
-        /* HERO */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 140px 20px 80px;
-            background: radial-gradient(
-                circle at center,
-                rgba(92,70,255,0.18),
-                transparent 50%
-            );
-        }
+      pointer-events: none;
 
-        .hero-content {
-            max-width: 900px;
-        }
+      background-image:
+        radial-gradient(1px 1px at 8% 15%, white, transparent),
+        radial-gradient(1px 1px at 18% 65%, white, transparent),
+        radial-gradient(1px 1px at 29% 35%, white, transparent),
+        radial-gradient(1px 1px at 41% 80%, white, transparent),
+        radial-gradient(1px 1px at 53% 20%, white, transparent),
+        radial-gradient(1px 1px at 64% 55%, white, transparent),
+        radial-gradient(1px 1px at 76% 12%, white, transparent),
+        radial-gradient(1px 1px at 87% 70%, white, transparent),
+        radial-gradient(1px 1px at 95% 35%, white, transparent);
 
-        .small-title {
-            display: inline-block;
-            padding: 9px 18px;
-            border: 1px solid #4c4380;
-            border-radius: 30px;
-            color: #b8aaff;
-            background: rgba(100,70,255,0.08);
-            margin-bottom: 25px;
-        }
+      background-size: 260px 260px;
 
-        h1 {
-            font-size: clamp(60px, 10vw, 110px);
-            line-height: 0.95;
-            margin: 0 0 30px;
-        }
+      opacity: 0.5;
 
-        .gradient {
-            background: linear-gradient(
-                90deg,
-                #8064ff,
-                #44c8ff,
-                #c080ff
-            );
-            -webkit-background-clip: text;
-            color: transparent;
-        }
+      z-index: -2;
+    }
 
-        .hero p {
-            color: #aeb0c2;
-            font-size: 20px;
-            line-height: 1.7;
-            max-width: 650px;
-            margin: auto;
-        }
 
-        /* BUTTON */
-        .button {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 15px 28px;
-            background: #7657ff;
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
+    body::after {
+      content: "";
 
-        .button:hover {
-            transform: translateY(-4px);
-            background: #947cff;
-            box-shadow: 0 10px 35px rgba(118,87,255,0.3);
-        }
+      position: fixed;
+      inset: 0;
 
-        /* SECTIONS */
-        section {
-            padding: 100px 7%;
-        }
+      pointer-events: none;
 
-        .section-title {
-            text-align: center;
-            margin-bottom: 55px;
-        }
+      background:
+        radial-gradient(
+          circle at 20% 20%,
+          rgba(55, 100, 220, 0.13),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 80% 70%,
+          rgba(110, 50, 220, 0.12),
+          transparent 30%
+        );
 
-        .section-title h2 {
-            font-size: 42px;
-            margin-bottom: 12px;
-        }
+      z-index: -3;
+    }
 
-        .section-title p {
-            color: #9093a8;
-        }
 
-        /* CARDS */
-        .cards {
-            max-width: 1250px;
-            margin: auto;
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-        }
+    /* =========================
+       NAVBAR
+    ========================= */
 
-        .card {
-            width: 280px;
-            padding: 30px;
-            border-radius: 22px;
-            background: rgba(255,255,255,0.035);
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: 0.35s;
-        }
+    nav {
+      height: 75px;
 
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: #7657ff;
-            background: rgba(100,75,255,0.08);
-        }
+      padding: 0 7%;
 
-        .icon {
-            font-size: 55px;
-            margin-bottom: 15px;
-        }
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-        .card h3 {
-            font-size: 26px;
-            margin-bottom: 12px;
-        }
+      position: sticky;
+      top: 0;
 
-        .card p {
-            color: #9da0b3;
-            line-height: 1.7;
-        }
+      z-index: 100;
 
-        /* FOOTER */
-        footer {
-            padding: 45px 20px;
-            text-align: center;
-            background: #090b1b;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            color: #777b91;
-        }
+      background: rgba(3, 7, 18, 0.78);
 
-        /* MOBILE */
-        @media (max-width: 800px) {
+      backdrop-filter: blur(14px);
 
-            header {
-                flex-direction: column;
-                gap: 15px;
-            }
+      border-bottom:
+        1px solid rgba(120, 170, 255, 0.15);
+    }
 
-            nav {
-                text-align: center;
-            }
 
-            nav a {
-                display: inline-block;
-                margin: 5px 8px;
-                font-size: 14px;
-            }
+    .logo {
+      font-size: 25px;
 
-            .card {
-                width: 100%;
-                max-width: 350px;
-            }
-        }
-    </style>
+      font-weight: 800;
+
+      letter-spacing: 3px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #ffffff,
+          #78aaff
+        );
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+
+    .nav-links {
+      display: flex;
+
+      align-items: center;
+
+      gap: 25px;
+
+      list-style: none;
+    }
+
+
+    .nav-links a {
+      color: #aebed8;
+
+      text-decoration: none;
+
+      font-size: 14px;
+
+      transition: 0.3s;
+    }
+
+
+    .nav-links a:hover,
+    .nav-links .active {
+      color: #78aaff;
+
+      text-shadow:
+        0 0 12px rgba(120, 170, 255, 0.7);
+    }
+
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      min-height: 720px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      text-align: center;
+
+      padding: 100px 25px;
+
+      position: relative;
+    }
+
+
+    .hero-content {
+      max-width: 900px;
+    }
+
+
+    .hero-badge {
+      display: inline-block;
+
+      padding: 9px 17px;
+
+      border-radius: 50px;
+
+      border:
+        1px solid rgba(120, 170, 255, 0.3);
+
+      background:
+        rgba(50, 90, 170, 0.12);
+
+      color: #8bb7ff;
+
+      font-size: 11px;
+
+      letter-spacing: 2px;
+
+      margin-bottom: 25px;
+    }
+
+
+    .hero h1 {
+      font-size: clamp(55px, 10vw, 110px);
+
+      line-height: 0.95;
+
+      letter-spacing: 5px;
+
+      margin-bottom: 25px;
+
+      background:
+        linear-gradient(
+          120deg,
+          #ffffff,
+          #a8c8ff,
+          #667dff
+        );
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+      text-shadow:
+        0 0 50px rgba(100, 140, 255, 0.1);
+    }
+
+
+    .hero h2 {
+      font-size: clamp(20px, 3vw, 30px);
+
+      font-weight: 400;
+
+      color: #a6b9d8;
+
+      margin-bottom: 25px;
+    }
+
+
+    .hero p {
+      max-width: 650px;
+
+      margin: auto;
+
+      color: #8094b5;
+
+      font-size: 16px;
+
+      line-height: 1.8;
+    }
+
+
+    .hero-buttons {
+      margin-top: 35px;
+
+      display: flex;
+
+      justify-content: center;
+
+      gap: 15px;
+
+      flex-wrap: wrap;
+    }
+
+
+    .hero-btn {
+      padding: 13px 24px;
+
+      border-radius: 9px;
+
+      text-decoration: none;
+
+      font-size: 13px;
+
+      font-weight: bold;
+
+      transition: 0.3s;
+    }
+
+
+    .primary-btn {
+      color: white;
+
+      background:
+        linear-gradient(
+          135deg,
+          #557cff,
+          #7658e8
+        );
+
+      box-shadow:
+        0 0 25px rgba(90, 110, 255, 0.2);
+    }
+
+
+    .primary-btn:hover {
+      transform: translateY(-3px);
+
+      box-shadow:
+        0 0 35px rgba(100, 130, 255, 0.4);
+    }
+
+
+    .secondary-btn {
+      color: #9db5dc;
+
+      border:
+        1px solid rgba(120, 170, 255, 0.25);
+
+      background:
+        rgba(50, 80, 140, 0.08);
+    }
+
+
+    .secondary-btn:hover {
+      border-color:
+        rgba(120, 170, 255, 0.5);
+
+      color: white;
+    }
+
+
+    /* =========================
+       SECTION
+    ========================= */
+
+    section {
+      position: relative;
+    }
+
+
+    .section-title {
+      text-align: center;
+
+      max-width: 700px;
+
+      margin: 0 auto 50px;
+
+      padding: 0 25px;
+    }
+
+
+    .section-title span {
+      display: inline-block;
+
+      color: #7da8ff;
+
+      font-size: 11px;
+
+      letter-spacing: 2px;
+
+      margin-bottom: 12px;
+    }
+
+
+    .section-title h2 {
+      font-size: clamp(34px, 5vw, 55px);
+
+      margin-bottom: 15px;
+
+      background:
+        linear-gradient(
+          120deg,
+          #ffffff,
+          #91baff,
+          #687cff
+        );
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+
+    .section-title p {
+      color: #8194b3;
+
+      font-size: 14px;
+
+      line-height: 1.7;
+    }
+
+
+    /* =========================
+       EXPLORE SECTION
+    ========================= */
+
+    .explore-section {
+      max-width: 1150px;
+
+      margin: 50px auto 120px;
+
+      padding: 0 25px;
+    }
+
+
+    .explore-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 18px;
+    }
+
+
+    .explore-card {
+      min-height: 230px;
+
+      padding: 25px;
+
+      border-radius: 18px;
+
+      background:
+        rgba(10, 18, 38, 0.7);
+
+      border:
+        1px solid rgba(120, 170, 255, 0.13);
+
+      text-decoration: none;
+
+      color: white;
+
+      transition: 0.3s;
+    }
+
+
+    .explore-card:hover {
+      transform: translateY(-7px);
+
+      border-color:
+        rgba(120, 170, 255, 0.4);
+
+      background:
+        rgba(16, 28, 57, 0.85);
+
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.25);
+    }
+
+
+    .explore-icon {
+      font-size: 35px;
+
+      margin-bottom: 20px;
+    }
+
+
+    .explore-card h3 {
+      font-size: 19px;
+
+      margin-bottom: 10px;
+    }
+
+
+    .explore-card p {
+      color: #7f92b2;
+
+      font-size: 13px;
+
+      line-height: 1.6;
+    }
+
+
+    /* =========================
+       GAMES
+    ========================= */
+
+    .games-section {
+      max-width: 1150px;
+
+      margin: 100px auto 120px;
+
+      padding: 0 25px;
+    }
+
+
+    .games-header {
+      text-align: center;
+
+      margin-bottom: 45px;
+    }
+
+
+    .games-badge {
+      display: inline-block;
+
+      padding: 8px 16px;
+
+      border:
+        1px solid rgba(120, 170, 255, 0.3);
+
+      border-radius: 50px;
+
+      background:
+        rgba(50, 90, 170, 0.12);
+
+      color: #8bb7ff;
+
+      font-size: 11px;
+
+      letter-spacing: 2px;
+
+      margin-bottom: 18px;
+    }
+
+
+    .games-header h2 {
+      font-size: clamp(35px, 5vw, 55px);
+
+      margin-bottom: 15px;
+
+      background:
+        linear-gradient(
+          120deg,
+          #ffffff,
+          #91baff,
+          #687cff
+        );
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+
+    .games-header p {
+      max-width: 600px;
+
+      margin: auto;
+
+      color: #8497b8;
+
+      line-height: 1.7;
+
+      font-size: 15px;
+    }
+
+
+    .games-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 22px;
+    }
+
+
+    .game-card {
+      position: relative;
+
+      padding: 30px;
+
+      min-height: 330px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: space-between;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(15, 27, 55, 0.9),
+          rgba(6, 12, 27, 0.9)
+        );
+
+      border:
+        1px solid rgba(120, 170, 255, 0.15);
+
+      border-radius: 20px;
+
+      overflow: hidden;
+
+      transition: 0.35s;
+    }
+
+
+    .game-card::before {
+      content: "";
+
+      position: absolute;
+
+      width: 180px;
+      height: 180px;
+
+      top: -80px;
+      right: -60px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(80, 120, 255, 0.12);
+
+      filter: blur(20px);
+    }
+
+
+    .game-card:hover {
+      transform: translateY(-8px);
+
+      border-color:
+        rgba(120, 170, 255, 0.4);
+
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.4),
+        0 0 35px rgba(80, 120, 255, 0.08);
+    }
+
+
+    .game-card.featured {
+      border-color:
+        rgba(110, 150, 255, 0.35);
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(25, 42, 85, 0.95),
+          rgba(7, 13, 30, 0.95)
+        );
+    }
+
+
+    .game-icon {
+      width: 70px;
+      height: 70px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 18px;
+
+      background:
+        rgba(90, 130, 255, 0.12);
+
+      border:
+        1px solid rgba(120, 170, 255, 0.2);
+
+      font-size: 34px;
+
+      margin-bottom: 25px;
+
+      box-shadow:
+        0 0 25px rgba(80, 120, 255, 0.08);
+    }
+
+
+    .game-type {
+      color: #718fc7;
+
+      font-size: 10px;
+
+      letter-spacing: 2px;
+
+      font-weight: bold;
+    }
+
+
+    .game-content h3 {
+      margin: 8px 0 12px;
+
+      font-size: 22px;
+    }
+
+
+    .game-content p {
+      color: #8193b1;
+
+      font-size: 13px;
+
+      line-height: 1.7;
+
+      margin-bottom: 22px;
+    }
+
+
+    .play-btn {
+      display: inline-block;
+
+      padding: 12px 20px;
+
+      border-radius: 9px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #557cff,
+          #7658e8
+        );
+
+      color: white;
+
+      text-decoration: none;
+
+      font-size: 13px;
+
+      font-weight: bold;
+
+      transition: 0.25s;
+
+      box-shadow:
+        0 0 20px rgba(90, 110, 255, 0.2);
+    }
+
+
+    .play-btn:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 0 30px rgba(100, 130, 255, 0.4);
+    }
+
+
+    .locked-btn {
+      padding: 11px 18px;
+
+      border-radius: 9px;
+
+      border:
+        1px solid rgba(120, 150, 190, 0.15);
+
+      background:
+        rgba(80, 100, 140, 0.08);
+
+      color: #62738f;
+
+      font-size: 12px;
+
+      cursor: not-allowed;
+    }
+
+
+    /* =========================
+       SPACE QUOTE
+    ========================= */
+
+    .quote-section {
+      max-width: 900px;
+
+      margin: 0 auto 120px;
+
+      padding: 0 25px;
+
+      text-align: center;
+    }
+
+
+    .quote-box {
+      padding: 50px 30px;
+
+      border-radius: 20px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(15, 28, 58, 0.7),
+          rgba(7, 13, 29, 0.8)
+        );
+
+      border:
+        1px solid rgba(120, 170, 255, 0.14);
+    }
+
+
+    .quote-box .quote-icon {
+      font-size: 35px;
+
+      margin-bottom: 20px;
+    }
+
+
+    .quote-box h2 {
+      font-size: clamp(25px, 4vw, 40px);
+
+      line-height: 1.3;
+
+      color: #dce8ff;
+
+      margin-bottom: 15px;
+    }
+
+
+    .quote-box p {
+      color: #7185a6;
+
+      font-size: 13px;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      padding: 40px 20px;
+
+      text-align: center;
+
+      border-top:
+        1px solid rgba(120, 170, 255, 0.1);
+
+      color: #536685;
+
+      font-size: 12px;
+    }
+
+
+    footer strong {
+      color: #91b7ff;
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 950px) {
+
+      .explore-grid {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+
+      .games-grid {
+        grid-template-columns:
+          1fr;
+      }
+
+    }
+
+
+    @media (max-width: 700px) {
+
+      nav {
+        height: auto;
+
+        padding: 20px;
+
+        flex-direction: column;
+
+        gap: 15px;
+      }
+
+
+      .nav-links {
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 12px;
+      }
+
+
+      .nav-links a {
+        font-size: 12px;
+      }
+
+
+      .hero {
+        min-height: 600px;
+
+        padding:
+          80px 20px;
+      }
+
+
+      .hero h1 {
+        letter-spacing: 2px;
+      }
+
+
+      .explore-grid {
+        grid-template-columns:
+          1fr;
+      }
+
+
+      .explore-card {
+        min-height: 200px;
+      }
+
+    }
+
+  </style>
 </head>
+
 
 <body>
 
-<!-- ================= HEADER ================= -->
 
-<header>
+  <!-- =========================
+       NAVIGATION
+  ========================= -->
 
-    <a href="astronious.html" class="logo">
-        ASTR<span>NIOUS</span>
-    </a>
+  <nav>
 
-    <nav>
-        <a href="astronious.html">Home</a>
-        <a href="planet.html">Planets</a>
-        <a href="missions.html">Missions</a>
-        <a href="stars.html">Stars</a>
-        <a href="galaxies.html">Galaxies</a>
-        <a href="facts.html">Facts</a>
-        <a href="about.html">About</a>
-        <a href="code-lab.html">Code Lab</a>
-    </nav>
-
-</header>
+    <div class="logo">
+      ASTRONIUS
+    </div>
 
 
-<!-- ================= HERO ================= -->
+    <ul class="nav-links">
 
-<section class="hero">
+      <li>
+        <a href="astronius.html" class="active">
+          Home
+        </a>
+      </li>
+
+      <li>
+        <a href="planet.html">
+          Planets
+        </a>
+      </li>
+
+      <li>
+        <a href="galaxies.html">
+          Galaxies
+        </a>
+      </li>
+
+      <li>
+        <a href="stars.html">
+          Stars
+        </a>
+      </li>
+
+      <li>
+        <a href="missions.html">
+          Missions
+        </a>
+      </li>
+
+      <li>
+        <a href="facts.html">
+          Facts
+        </a>
+      </li>
+
+      <li>
+        <a href="code-lab.html">
+          Code Lab
+        </a>
+      </li>
+
+      <li>
+        <a href="about.html">
+          About
+        </a>
+      </li>
+
+    </ul>
+
+  </nav>
+
+
+
+  <!-- =========================
+       HERO
+  ========================= -->
+
+  <section class="hero">
 
     <div class="hero-content">
 
-        <div class="small-title">
-            ✦ Welcome to ASTRONIUS
-        </div>
+      <div class="hero-badge">
+        WELCOME TO ASTRONIUS
+      </div>
 
-        <h1>
-            Explore the
-            <span class="gradient">Universe.</span>
-        </h1>
 
-        <p>
-            Journey beyond Earth and discover planets,
-            stars, galaxies and the mysteries of deep space.
-        </p>
+      <h1>
+        ASTRONIUS
+      </h1>
 
-        <a href="planet.html" class="button">
-            Begin Your Journey 🚀
+
+      <h2>
+        Explore the Universe.
+      </h2>
+
+
+      <p>
+        Discover planets, galaxies, stars, missions,
+        fascinating space facts, and the incredible
+        universe beyond our world.
+      </p>
+
+
+      <div class="hero-buttons">
+
+        <a
+          href="planet.html"
+          class="hero-btn primary-btn">
+
+          🪐 EXPLORE SPACE
+
         </a>
+
+
+        <a
+          href="#games"
+          class="hero-btn secondary-btn">
+
+          🚀 PLAY GAMES
+
+        </a>
+
+      </div>
 
     </div>
 
-</section>
+  </section>
 
 
-<!-- ================= EXPLORE SPACE ================= -->
 
-<section>
+  <!-- =========================
+       EXPLORE
+  ========================= -->
+
+  <section class="explore-section">
 
     <div class="section-title">
 
-        <h2>🌌 Explore Space</h2>
+      <span>
+        DISCOVER THE COSMOS
+      </span>
+
+      <h2>
+        EXPLORE
+      </h2>
+
+      <p>
+        Start your journey through some of the
+        most fascinating parts of our universe.
+      </p>
+
+    </div>
+
+
+    <div class="explore-grid">
+
+
+      <a
+        href="planet.html"
+        class="explore-card">
+
+        <div class="explore-icon">
+          🪐
+        </div>
+
+        <h3>
+          Planets
+        </h3>
 
         <p>
-            There is an entire universe waiting to be discovered.
+          Travel across our Solar System and
+          discover the worlds orbiting our Sun.
         </p>
 
-    </div>
+      </a>
 
 
-    <div class="cards">
+      <a
+        href="galaxies.html"
+        class="explore-card">
 
-        <!-- PLANETS -->
-
-        <div class="card">
-
-            <div class="icon">🪐</div>
-
-            <h3>Planets</h3>
-
-            <p>
-                Discover fascinating worlds across our Solar System
-                and beyond.
-            </p>
-
-            <a href="planet.html" class="button">
-                Explore
-            </a>
-
+        <div class="explore-icon">
+          🌌
         </div>
 
+        <h3>
+          Galaxies
+        </h3>
 
-        <!-- STARS -->
+        <p>
+          Explore enormous collections of stars,
+          gas, dust, and mysterious cosmic objects.
+        </p>
 
-        <div class="card">
+      </a>
 
-            <div class="icon">⭐</div>
 
-            <h3>Stars</h3>
+      <a
+        href="stars.html"
+        class="explore-card">
 
-            <p>
-                Learn about enormous stars that illuminate
-                the universe.
-            </p>
-
-            <a href="stars.html" class="button">
-                Explore
-            </a>
-
+        <div class="explore-icon">
+          ⭐
         </div>
 
+        <h3>
+          Stars
+        </h3>
 
-        <!-- GALAXIES -->
+        <p>
+          Learn how stars form, live, change,
+          and eventually reach their final stages.
+        </p>
 
-        <div class="card">
+      </a>
 
-            <div class="icon">🌌</div>
 
-            <h3>Galaxies</h3>
+      <a
+        href="missions.html"
+        class="explore-card">
 
-            <p>
-                Explore massive collections of stars,
-                planets, gas and dust.
-            </p>
-
-            <a href="galaxies.html" class="button">
-                Explore
-            </a>
-
+        <div class="explore-icon">
+          🚀
         </div>
 
+        <h3>
+          Missions
+        </h3>
 
-        <!-- CODE LAB -->
+        <p>
+          Discover spacecraft and missions that
+          have helped us explore the cosmos.
+        </p>
 
-        <div class="card">
+      </a>
 
-            <div class="icon">💻</div>
-
-            <h3>Code Lab</h3>
-
-            <p>
-                Discover the technology and programming
-                behind space exploration.
-            </p>
-
-            <a href="code-lab.html" class="button">
-                Enter Lab
-            </a>
-
-        </div>
 
     </div>
 
-</section>
+  </section>
 
 
-<!-- ================= FOOTER ================= -->
 
-<footer>
+  <!-- =========================
+       GAMES
+  ========================= -->
 
-    <div class="logo">
-        ASTR<span>NIOUS</span>
+  <section
+    class="games-section"
+    id="games">
+
+
+    <div class="games-header">
+
+      <div class="games-badge">
+        ASTRONIUS // SPACE ARCADE
+      </div>
+
+
+      <h2>
+        PLAY IN SPACE
+      </h2>
+
+
+      <p>
+        Take a break from exploring the universe
+        and test your skills with ASTRONIUS games.
+      </p>
+
     </div>
 
-    <p>
-        Look up. Dream bigger. Explore farther. 🌌
-    </p>
 
-    <p>
-        © 2026 ASTRONIUS
-    </p>
+    <div class="games-grid">
 
-</footer>
+
+      <!-- MAIN GAME -->
+
+      <div class="game-card featured">
+
+        <div>
+
+          <div class="game-icon">
+            🚀
+          </div>
+
+
+          <div class="game-content">
+
+            <span class="game-type">
+              SPACE MISSION
+            </span>
+
+
+            <h3>
+              ASTRONIUS GAME
+            </h3>
+
+
+            <p>
+              Launch your mission, explore the stars,
+              and see how far you can travel through
+              space.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div>
+
+          <a
+            href="Game.html"
+            class="play-btn">
+
+            🚀 PLAY NOW
+
+          </a>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- PLANET HUNTER -->
+
+      <div class="game-card">
+
+        <div>
+
+          <div class="game-icon">
+            🪐
+          </div>
+
+
+          <div class="game-content">
+
+            <span class="game-type">
+              COMING SOON
+            </span>
+
+
+            <h3>
+              PLANET HUNTER
+            </h3>
+
+
+            <p>
+              Search the galaxy and discover
+              mysterious worlds hidden among
+              the stars.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="locked-btn"
+          disabled>
+
+          🔒 LOCKED
+
+        </button>
+
+      </div>
+
+
+
+      <!-- ASTEROID RUN -->
+
+      <div class="game-card">
+
+        <div>
+
+          <div class="game-icon">
+            🌠
+          </div>
+
+
+          <div class="game-content">
+
+            <span class="game-type">
+              COMING SOON
+            </span>
+
+
+            <h3>
+              ASTEROID RUN
+            </h3>
+
+
+            <p>
+              Dodge asteroids, survive the cosmic
+              field, and beat your highest score.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="locked-btn"
+          disabled>
+
+          🔒 LOCKED
+
+        </button>
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================
+       SPACE QUOTE
+  ========================= -->
+
+  <section class="quote-section">
+
+    <div class="quote-box">
+
+      <div class="quote-icon">
+        🌌
+      </div>
+
+
+      <h2>
+        The universe is bigger
+        than you can imagine.
+      </h2>
+
+
+      <p>
+        Keep exploring. There is always
+        something new to discover.
+      </p>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+
+    <strong>
+      ASTRONIUS
+    </strong>
+
+    — Explore. Discover. Create. 🌌
+
+  </footer>
 
 
 </body>
